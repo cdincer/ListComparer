@@ -5,7 +5,7 @@
       "title": "Securing React Apps with Auth0",
       "slug": "react-auth0-authentication-security",
       "authorId": 1,
-      "category": "JavaScript"
+      "category": "JavaS2cript"
     },
     {
       "id": 2,
@@ -44,7 +44,7 @@
     },
     {
       "id": 7,
-      "title": "Clean Code: Writing Code for Humans",
+      "title": "Clean Code: Writing Code for Humans1",
       "slug": "writing-clean-code-humans",
       "authorId": 1,
       "category": "Software Practices"
@@ -72,11 +72,35 @@
     },
     {
       "id": 11,
-      "slug": "111",
-      "title": "111",
+      "slug": "33",
+      "title": "33",
       "authorId": 1,
-      "category": "333",
-      "createdAt": 1665072034409
+      "category": "4",
+      "createdAt": 1665676384147
+    },
+    {
+      "id": 12,
+      "slug": "444",
+      "title": "444",
+      "authorId": 1,
+      "category": "111",
+      "createdAt": 1665676397594
+    },
+    {
+      "id": 13,
+      "slug": "222",
+      "title": "222",
+      "authorId": 1,
+      "category": "111",
+      "createdAt": 1665677144617
+    },
+    {
+      "id": 14,
+      "slug": "123123",
+      "title": "123123",
+      "authorId": 1,
+      "category": "444",
+      "createdAt": 1665677216232
     }
   ],
   "authors": [
