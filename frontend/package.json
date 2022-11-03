@@ -1,6 +1,6 @@
 {
   "name": "ps-redux",
-  "description": "my attempt at learning React",
+  "description": "React and Redux exercise",
   "scripts": {
     "start": "webpack serve --config webpack.config.dev.js --port 3000"
   },
@@ -48,7 +48,7 @@
     "style-loader": "3.0.0",
     "webpack": "5.44.0",
     "webpack-bundle-analyzer": "4.4.2",
-    "webpack-cli": "4.9.0",
+    "webpack-cli": "4.10.0",
     "webpack-dev-server": "3.11.2"
   },
   "engines": {
