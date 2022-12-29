@@ -1,26 +1,22 @@
 import React from "react";
+import Navbar2 from "react-bootstrap/Navbar"
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+
 
 const Navbar = () => {
   return (
-    <div className ="navbar navbar-inverse navbar-fixed-top">
-    <div className ="navbar-inner">
-      <div className ="container">
-        <button type="button" className ="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span className ="icon-bar"></span>
-          <span className ="icon-bar"></span>
-          <span className ="icon-bar"></span>
-        </button>
-        <a className ="brand" href="https://www.w3schools.com/">Project name</a>
-        <div className ="nav-collapse collapse">
-          <ul className ="nav">
-            <li className ="active"><a href="https://www.w3schools.com/">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+    <Navbar2 className="navbar navbar-inverse" expand="lg">
+    <Container className="container">
+    <Navbar2.Brand className="navbar-brand" href="#home">Navbar with text</Navbar2.Brand>     
+      <Nav className="me-auto">
+            <Nav.Link  href="#home">Home</Nav.Link>
+            <span>|</span><Nav.Link  href="#link">Test-Link-1</Nav.Link>
+            <span>|</span><Nav.Link  href="#link">Test-Link-2</Nav.Link>
+
+            </Nav>
+    </Container>
+  </Navbar2>
   );
 };
 
