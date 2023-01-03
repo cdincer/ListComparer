@@ -1,0 +1,22 @@
+[
+    {
+      "Name": "SteamWishListAddress",
+      "Description": "Public Steam Wishlist",
+      "Value": "https://steamcommunity.com/profiles/YourUserProfile/"
+    },
+    {
+      "Name": "GOGWishListAddress",
+      "Description": "Public GOG Wishlist",
+      "Value": "https://www.gog.com/en/u/YourUserProfile/wishlist"
+    },
+    {
+      "Name": "GOGLibrary",
+      "Description": "GOG User Public Library",
+      "Value": "Not Found Yet"
+    },
+    {
+      "Name": "SteamLibrary",
+      "Description": "Steam User Public Library",
+      "Value": "https://steamcommunity.com/profiles/YourUserProfile/games/?tab=all"
+    }
+  ]
