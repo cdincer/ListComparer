@@ -28,25 +28,28 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        string url = "https://store.steampowered.com/wishlist/profiles/YourSteamWishList/#sort=order";
-        //g_rgWishlistData variable to look for.
+        //This profile belongs to  SteamDB's creator. It's his public wishlist.
+        //It's ok to share it in a public repo like this and It's ok to draw attention like this because he deserves it 
+        //and he literally accepts friends for wishlist donations. SteamDB is a great source, I wish I can do more for it, this is it.  
+        string url = "https://store.steampowered.com/wishlist/id/xPaw/#sort=order";
+        //g_rgWishlistData variable to look for.This is our wishlist variable.
         HttpClient client = new HttpClient();
         string response = client.GetStringAsync(url).Result;
+        int begin = response.IndexOf("var g_rgWishlistData");
+        int end = response.IndexOf("var g_rgAppInfo") - 4;//End with some to spare that's why we subtract the 4.
 
+        StringBuilder BasicWishListBuilder = new StringBuilder();
+        for (int i = begin; i < end; i++)
+        {
+            BasicWishListBuilder.Append(response[i]);
+        }
+
+        string BasicWishList = BasicWishListBuilder.ToString();
         HtmlDocument htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(response);
 
 
-        var programmerLinks = htmlDoc.DocumentNode.Descendants("li")
-        .Where(node => !node.GetAttributeValue("class", "").Contains("tocsection"))
-        .ToList();
 
-        List<string> wikiLink = new List<string>();
-
-        foreach (var link in programmerLinks)
-        {
-            if (link.FirstChild.Attributes.Count > 0) wikiLink.Add("https://en.wikipedia.org/" + link.FirstChild.Attributes[0].Value);
-        }
 
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
