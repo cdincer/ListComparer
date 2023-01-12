@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace backend.Controllers;
 
@@ -37,11 +39,30 @@ public class GOGController : ControllerBase
         {
             BasicWishListBuilder.Append(response[i]);
         }
+        BasicWishListBuilder.Replace("var gogData = ", "");
 
-        string BasicWishList = BasicWishListBuilder.ToString();
+        List<string> ItemsToAdd = new List<string>();
+        while (BasicWishListBuilder.ToString().Contains("\"title\":"))
+        {
+            int startIndex = BasicWishListBuilder.ToString().IndexOf("\"title\":");
+            int gameIndex = startIndex + 9;
+            StringBuilder GameName = new StringBuilder();
+            while (BasicWishListBuilder[gameIndex] != '"')
+            {
+                GameName.Append(BasicWishListBuilder[gameIndex]);
+                gameIndex++;
+            }
+            ItemsToAdd.Add(GameName.ToString());
+            BasicWishListBuilder.Remove(startIndex, 8);
+            GameName.Clear();
+        }
+
+
+
+
         HtmlDocument htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(response);
 
-        return BasicWishList;
+        return ";;;";
     }
 }
