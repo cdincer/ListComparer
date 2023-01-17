@@ -2,21 +2,21 @@
     {
       "Name": "SteamWishListAddress",
       "Description": "Public Steam Wishlist",
-      "Value": "https://steamcommunity.com/profiles/YourUserProfile/"
+      "Value": "https://store.steampowered.com/wishlist/profiles/76561199468516180/#sort=order"
     },
     {
       "Name": "GOGWishListAddress",
       "Description": "Public GOG Wishlist",
-      "Value": "https://www.gog.com/en/u/YourUserProfile/wishlist"
+      "Value": "https://www.gog.com/en/u/listcomparer/wishlist"
     },
     {
       "Name": "GOGLibrary",
       "Description": "GOG User Public Library",
-      "Value": "Not Found Yet"
+      "Value": "https://www.gog.com/u/listcomparer/games?sort=recent_playtime&order=desc&comparedUserId=56148883112532271"
     },
     {
       "Name": "SteamLibrary",
       "Description": "Steam User Public Library",
-      "Value": "https://steamcommunity.com/profiles/YourUserProfile/games/?tab=all"
+      "Value": "https://steamcommunity.com/profiles/76561199468516180/games/?tab=all"
     }
   ]
