@@ -57,12 +57,16 @@ public class GOGController : ControllerBase
             GameName.Clear();
         }
 
-
-
+        List<GOGWishlist> GTBR = new List<GOGWishlist>();
+        foreach (string Item in ItemsToAdd)
+        {
+            GTBR.Add(new GOGWishlist { Name = Item, Price = "45" });
+        }
+        var JsonGTBR = JsonConvert.SerializeObject(GTBR);
 
         HtmlDocument htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(response);
 
-        return ";;;";
+        return JsonGTBR;
     }
 }
