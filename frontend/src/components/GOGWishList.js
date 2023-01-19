@@ -1,6 +1,24 @@
-import React from "react";
-import ListGroup from "react-bootstrap/ListGroup";
+import { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
+
+export default function GOGWishList() {
+ const [ GOGWishListGames, setGOGWishlist ] = useState([]);
+ 
+ useEffect(() => {
+   const fetchata = async () => {
+ 
+       const response = await fetch(
+         'https://localhost:7181/GOG');
+          const data = await response.json();
+
+          //use only 3 sample data
+          setGOGWishlist( data)
+      
+   }
+ 
+   // Call the function
+   fetchata();
+}, []);
 
 
 function HandleSave(event) {
@@ -14,81 +32,38 @@ function HandleSave(event) {
       console.log(responseJson)
     })
 }
-
-function GOGWishList() {  
-
  
-
-
-    return(
-    <>
-    <Container className="container">
-    <div className="col-sm">
-    <table className="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="label">Default</span>
-                </td>
-                <td>
-                  <code>&lt;span className="label"&gt;Default&lt;/span&gt;</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="label label-success">Success</span>
-                </td>
-                <td>
-                  <code>&lt;span className="label label-success"&gt;Success&lt;/span&gt;</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="label label-warning">Warning</span>
-                </td>
-                <td>
-                  <code>&lt;span className="label label-warning"&gt;Warning&lt;/span&gt;</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="label label-important">Important</span>
-                </td>
-                <td>
-                  <code>&lt;span className="label label-important"&gt;Important&lt;/span&gt;</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="label label-info">Info</span>
-                </td>
-                <td>
-                  <code>&lt;span className="label label-info"&gt;Info&lt;/span&gt;</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="label label-inverse">Inverse</span>
-                </td>
-                <td>
-                  <code>&lt;span class="label label-inverse"&gt;Inverse&lt;/span&gt;</code>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-    <form onSubmit={HandleSave}>
+ return (
+  <Container className="container">
+  <div className="col-sm">
+  <table className="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+       
+         {
+         GOGWishListGames.map( (game,key) =>
+            <tr key={key}>
+              <td>
+                <span className="label">{game.Name}</span>
+              </td>
+              <td>
+              {game.Price}
+              </td>
+            </tr>
+         )
+}
+        
+          </tbody>
+        </table>
+        <form onSubmit={HandleSave}>
     <button type="submit" className="btn">Get WishList</button>    
     </form>
-    </div>
+  </div>
 </Container>
-</>
-)
-  };
-
-export default GOGWishList;
+ );
+}
