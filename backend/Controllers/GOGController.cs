@@ -31,6 +31,21 @@ public class GOGController : ControllerBase
         //g_rgWishlistData variable to look for.This is our wishlist variable.
         HttpClient client = new HttpClient();
         string response = client.GetStringAsync(url).Result;
+
+
+
+        List<GOGWishlist> GTBR = TitleHarvester(response);
+
+        var JsonGTBR = JsonConvert.SerializeObject(GTBR);
+
+        HtmlDocument htmlDoc = new HtmlDocument();
+        htmlDoc.LoadHtml(response);
+
+        return JsonGTBR;
+    }
+
+    public List<GOGWishlist> TitleHarvester(string response)
+    {
         int begin = response.IndexOf("var gogData");
         int end = response.IndexOf("var translationData") - 4;//End with some to spare that's why we subtract the 4.
 
@@ -62,11 +77,7 @@ public class GOGController : ControllerBase
         {
             GTBR.Add(new GOGWishlist { Name = Item, Price = "45" });
         }
-        var JsonGTBR = JsonConvert.SerializeObject(GTBR);
-
-        HtmlDocument htmlDoc = new HtmlDocument();
-        htmlDoc.LoadHtml(response);
-
-        return JsonGTBR;
+        return GTBR;
     }
+
 }
