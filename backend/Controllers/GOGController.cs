@@ -35,7 +35,7 @@ public class GOGController : ControllerBase
 
 
         List<GOGWishlist> GTBR = TitleHarvester(response);
-
+        GTBR = PriceHarvester(response, GTBR);
         var JsonGTBR = JsonConvert.SerializeObject(GTBR);
 
         HtmlDocument htmlDoc = new HtmlDocument();
@@ -76,6 +76,44 @@ public class GOGController : ControllerBase
         foreach (string Item in ItemsToAdd)
         {
             GTBR.Add(new GOGWishlist { Name = Item, Price = "45" });
+        }
+        return GTBR;
+    }
+
+    public List<GOGWishlist> PriceHarvester(string response, List<GOGWishlist> HarvestedTitles)
+    {
+        int begin = response.IndexOf("var gogData");
+        int end = response.IndexOf("var translationData") - 4;//End with some to spare that's why we subtract the 4.
+
+        StringBuilder BasicWishListBuilder = new StringBuilder();
+        for (int i = begin; i < end; i++)
+        {
+            BasicWishListBuilder.Append(response[i]);
+        }
+        BasicWishListBuilder.Replace("var gogData = ", "");
+
+        List<string> ItemsToAdd = new List<string>();
+        while (BasicWishListBuilder.ToString().Contains("\"amount\":"))
+        {
+            int startIndex = BasicWishListBuilder.ToString().IndexOf("\"amount\":");
+            int gameIndex = startIndex + 10;
+            StringBuilder GameName = new StringBuilder();
+            while (BasicWishListBuilder[gameIndex] != '"')
+            {
+                GameName.Append(BasicWishListBuilder[gameIndex]);
+                gameIndex++;
+            }
+            ItemsToAdd.Add(GameName.ToString());
+            BasicWishListBuilder.Remove(startIndex, 8);
+            GameName.Clear();
+        }
+
+        List<GOGWishlist> GTBR = new List<GOGWishlist>();
+        int TitleIndex = 0;
+        foreach (string Item in ItemsToAdd)
+        {
+            GTBR.Add(new GOGWishlist { Name = HarvestedTitles[TitleIndex].Name, Price = Item });
+            TitleIndex++;
         }
         return GTBR;
     }
