@@ -1,37 +1,18 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Container from 'react-bootstrap/Container';
 
 export default function GOGWishList() {
  const [ GOGWishListGames, setGOGWishlist ] = useState([]);
  
- useEffect(() => {
-   const fetchata = async () => {
- 
-       const response = await fetch(
-         'https://localhost:7181/GOG');
-          const data = await response.json();
+const handleClick = async (event) => {
+  event.preventDefault();
+    const response = await fetch(
+    'https://localhost:7181/GOG');
+     const data = await response.json();
+     setGOGWishlist(data);
+     console.log('TO-DO:Add Performance Counter');
 
-          //use only 3 sample data
-          setGOGWishlist( data)
-      
-   }
- 
-   // Call the function
-   fetchata();
-}, []);
-
-
-function HandleSave(event) {
-  event.preventDefault()
-  fetch("https://localhost:7181/GOG",
-  {
-    crossDomain:true
-  })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson)
-    })
-}
+};
  
  return (
   <Container className="container">
@@ -60,7 +41,7 @@ function HandleSave(event) {
         
           </tbody>
         </table>
-        <form onSubmit={HandleSave}>
+        <form onSubmit={handleClick}>
     <button type="submit" className="btn">Get WishList</button>    
     </form>
   </div>
