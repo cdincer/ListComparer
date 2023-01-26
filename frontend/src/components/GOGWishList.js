@@ -42,7 +42,7 @@ const handleClick = async (event) => {
           </tbody>
         </table>
         <form onSubmit={handleClick}>
-    <button type="submit" className="btn">Get WishList</button>    
+    <button type="submit" className="btn">Get GOG Wish List</button>    
     </form>
   </div>
 </Container>

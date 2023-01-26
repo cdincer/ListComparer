@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace backend.Controllers;
 
@@ -29,7 +30,7 @@ public class SteamController : ControllerBase
         //g_rgWishlistData variable to look for.This is our wishlist variable.
         HttpClient client = new HttpClient();
         string response = client.GetStringAsync(url).Result;
-        int begin = response.IndexOf("var g_rgWishlistData");
+        int begin = response.IndexOf("g_rgWishlistData") + 19;
         int end = response.IndexOf("var g_rgAppInfo") - 4;//End with some to spare that's why we subtract the 4.
 
         StringBuilder BasicWishListBuilder = new StringBuilder();
@@ -38,10 +39,44 @@ public class SteamController : ControllerBase
             BasicWishListBuilder.Append(response[i]);
         }
 
-        string BasicWishList = BasicWishListBuilder.ToString();
-        HtmlDocument htmlDoc = new HtmlDocument();
-        htmlDoc.LoadHtml(response);
 
-        return BasicWishList;
+        List<SteamWishList> STBR = TitleHarvester(BasicWishListBuilder.ToString());
+        var JsonSTBR = JsonConvert.SerializeObject(STBR);
+
+        return JsonSTBR;
     }
+
+
+    public List<SteamWishList> TitleHarvester(string response)
+    {
+        int begin = response.IndexOf("[");
+        int end = response.IndexOf("]");//End with some to spare that's why we subtract the 4.
+
+        StringBuilder BasicWishListBuilder = new StringBuilder();
+        BasicWishListBuilder.Append(response);
+        List<string> ItemsToAdd = new List<string>();
+        while (BasicWishListBuilder.ToString().Contains("\"appid\":"))
+        {
+            int startIndex = BasicWishListBuilder.ToString().IndexOf("\"appid\":");
+            int gameIndex = startIndex + 8;
+            StringBuilder GameName = new StringBuilder();
+            while (BasicWishListBuilder[gameIndex] != ',')
+            {
+                GameName.Append(BasicWishListBuilder[gameIndex]);
+                gameIndex++;
+            }
+            ItemsToAdd.Add(GameName.ToString());
+            BasicWishListBuilder.Remove(startIndex, 8);
+            GameName.Clear();
+        }
+
+        List<SteamWishList> STBR = new List<SteamWishList>();
+        foreach (string Item in ItemsToAdd)
+        {
+            STBR.Add(new SteamWishList { appid = Item, added = "PlaceHolder" });
+        }
+        return STBR;
+    }
+
+
 }

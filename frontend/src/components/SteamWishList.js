@@ -1,23 +1,50 @@
-import React from "react";
-import  ListGroup from "react-bootstrap/ListGroup";
+import {  useState } from "react";
 import Container from 'react-bootstrap/Container';
 
-function SteamWishList(props) {  
-    return(
-    <>
-    <Container className="container">
-    <div className="col-sm">
-    <ListGroup>
-    <ListGroup.Item>I am the test SteamWishList {props.SteamWishListAddress}</ListGroup.Item>
-    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-    <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-    <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-    </ListGroup>
-    </div>
-</Container>
-</>
-)
-  };
+export default function SteamWishList() {
+ const [ SteamWishListGames, setSteamWishList ] = useState([]);
+ 
+const handleClick = async (event) => {
+  event.preventDefault();
+    const response = await fetch(
+    'https://localhost:7181/Steam');
+     const data = await response.json();
+     setSteamWishList(data);
+     console.log('TO-DO:Add Performance Counter');
 
-export default SteamWishList;
+};
+ 
+ return (
+  <Container className="container">
+  <div className="col-sm">
+  <table className="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+       
+         {
+         SteamWishListGames.map( (game,key) =>
+            <tr key={key}>
+              <td>
+                <span className="label">{game.appid}</span>
+              </td>
+              <td>
+              {game.added}
+              </td>
+            </tr>
+         )
+}
+        
+          </tbody>
+        </table>
+        <form onSubmit={handleClick}>
+    <button type="submit" className="btn">Get Steam WishList</button>    
+    </form>
+  </div>
+</Container>
+ );
+}

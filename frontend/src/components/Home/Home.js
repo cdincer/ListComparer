@@ -28,6 +28,7 @@ const HomePage = () => {
     <>
     <Container className="container">
     <SteamWishList SteamWishListAddress={SteamWishListAddressVar}/>
+    <br></br>
     <GOGWishList GOGWishListAddress={GOGWishListAddressVar}/>
 </Container>
 </>
