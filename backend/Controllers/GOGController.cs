@@ -31,9 +31,6 @@ public class GOGController : ControllerBase
         //g_rgWishlistData variable to look for.This is our wishlist variable.
         HttpClient client = new HttpClient();
         string response = client.GetStringAsync(url).Result;
-
-
-
         List<GOGWishlist> GTBR = TitleHarvester(response);
         GTBR = PriceHarvester(response, GTBR);
         var JsonGTBR = JsonConvert.SerializeObject(GTBR);

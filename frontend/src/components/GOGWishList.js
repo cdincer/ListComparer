@@ -30,7 +30,7 @@ const handleClick = async (event) => {
          GOGWishListGames.map( (game,key) =>
             <tr key={key}>
               <td>
-                <span className="label">{game.Name}</span>
+               {game.Name}
               </td>
               <td>
               {game.Price}

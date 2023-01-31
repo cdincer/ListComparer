@@ -10,6 +10,12 @@ const handleClick = async (event) => {
     'https://localhost:7181/Steam');
      const data = await response.json();
      setSteamWishList(data);
+      let sum =0;
+     for (let i = 0; i < data.length; i++) {
+      let PriceVariable = parseInt(data[i].price);
+      sum = sum + PriceVariable;
+      //console.log(sum);
+  }
      console.log('TO-DO:Add Performance Counter');
 
 };
@@ -20,7 +26,8 @@ const handleClick = async (event) => {
   <table className="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>AppId</th>
+              <th>Title</th>
               <th>Price</th>
             </tr>
           </thead>
@@ -30,10 +37,13 @@ const handleClick = async (event) => {
          SteamWishListGames.map( (game,key) =>
             <tr key={key}>
               <td>
-                <span className="label">{game.appid}</span>
+               {game.appid}
               </td>
               <td>
-              {game.added}
+                {game.title}
+              </td>
+              <td>
+              {game.price}
               </td>
             </tr>
          )

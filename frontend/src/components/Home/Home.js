@@ -12,7 +12,7 @@ const HomePage = () => {
   for (var i = 0; i < data.length; i++)
   {
       var obj = data[i];
-      console.log(`Name: ${obj.Name}, ${obj.Value}`);
+      // console.log(`Name: ${obj.Name}, ${obj.Value}`);
 
       if(obj.Name === 'SteamWishListAddress')
       {
