@@ -24,6 +24,7 @@ public class SteamController : ControllerBase
         //g_rgWishlistData variable to look for.This is our wishlist variable.
         HttpClient client = new HttpClient();
         string response = client.GetStringAsync(url).Result;
+        client.Dispose();
         int begin = response.IndexOf("g_rgWishlistData") + 19;
         int end = response.IndexOf("var g_rgAppInfo") - 4;//End with some to spare that's why we subtract the 4.
 
@@ -37,7 +38,8 @@ public class SteamController : ControllerBase
         List<SteamWishList> STBR = TitleHarvester(BasicWishListBuilder.ToString());
         STBR = NamePriceHarvester(STBR);
         var JsonSTBR = JsonConvert.SerializeObject(STBR);
-
+        BasicWishListBuilder.Clear();
+        STBR.Clear();
         return JsonSTBR;
     }
 
@@ -70,6 +72,7 @@ public class SteamController : ControllerBase
         {
             STBR.Add(new SteamWishList { appid = Item, added = "PlaceHolder" });
         }
+        BasicWishListBuilder.Clear();
         return STBR;
     }
     //https://store.steampowered.com/app/217200 Worms Armageddon page
@@ -92,6 +95,7 @@ public class SteamController : ControllerBase
             if (price != null)
             {
                 ItemPrice = price[0].InnerHtml;
+                price.Clear();
             }
             else
             {
@@ -109,9 +113,8 @@ public class SteamController : ControllerBase
             }
 
             STBR.Add(new SteamWishList { appid = item.appid, title = Title, added = "PlaceHolder", price = ItemPrice });
+            client.Dispose();
         }
-
-
 
         return STBR;
 

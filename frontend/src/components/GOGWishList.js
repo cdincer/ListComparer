@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 
 export default function GOGWishList() {
  const [ GOGWishListGames, setGOGWishlist ] = useState([]);
+ const [SumOfWishListedGOGGames,setSumOfWishListedGOGGames] = useState([]);
+
  
 const handleClick = async (event) => {
   event.preventDefault();
@@ -10,6 +12,15 @@ const handleClick = async (event) => {
     'https://localhost:7181/GOG');
      const data = await response.json();
      setGOGWishlist(data);
+     let sum =0;
+     for (let i = 0; i < data.length; i++) {
+      let PriceVariable =0;
+      if (Number.isInteger(parseInt(data[i].price) )) {
+        PriceVariable = parseInt(data[i].price);
+      }
+      sum = sum + PriceVariable;
+      setSumOfWishListedGOGGames(sum);
+  }
      console.log('TO-DO:Add Performance Counter');
 
 };
@@ -38,7 +49,9 @@ const handleClick = async (event) => {
             </tr>
          )
 }
-        
+        <tr><td>Total of All Wishlisted GOG Games</td>
+        <td>{SumOfWishListedGOGGames}</td>
+        </tr>
           </tbody>
         </table>
         <form onSubmit={handleClick}>

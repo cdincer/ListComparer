@@ -2,7 +2,8 @@ import {  useState } from "react";
 import Container from 'react-bootstrap/Container';
 
 export default function SteamWishList() {
- const [ SteamWishListGames, setSteamWishList ] = useState([]);
+ const [SteamWishListGames, setSteamWishList ] = useState([]);
+ const [SumOfWishListedSteamGames,setSumOfWishListedSteamGames] = useState([]);
  
 const handleClick = async (event) => {
   event.preventDefault();
@@ -12,9 +13,12 @@ const handleClick = async (event) => {
      setSteamWishList(data);
       let sum =0;
      for (let i = 0; i < data.length; i++) {
-      let PriceVariable = parseInt(data[i].price);
+      let PriceVariable =0;
+      if (Number.isInteger(parseInt(data[i].price) )) {
+        PriceVariable = parseInt(data[i].price);
+      }
       sum = sum + PriceVariable;
-      //console.log(sum);
+      setSumOfWishListedSteamGames(sum);
   }
      console.log('TO-DO:Add Performance Counter');
 
@@ -48,7 +52,10 @@ const handleClick = async (event) => {
             </tr>
          )
 }
-        
+        <tr><td>Total of All Wishlisted Steam Games</td>
+        <td></td>
+        <td>{SumOfWishListedSteamGames}</td>
+        </tr>
           </tbody>
         </table>
         <form onSubmit={handleClick}>
