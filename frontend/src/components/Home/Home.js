@@ -1,7 +1,7 @@
 import React from "react";
 import Container from 'react-bootstrap/Container';
-import SteamWishList from "../SteamWishList";
-import GOGWishList from "../GOGWishList";
+import SteamWishList from "../Wishlist/SteamWishList";
+import GOGWishList from "../Wishlist/GOGWishList";
 
 const HomePage = () => {
 
