@@ -15,8 +15,8 @@ const handleClick = async (event) => {
      let sum =0;
      for (let i = 0; i < data.length; i++) {
       let PriceVariable =0;
-      if (Number.isInteger(parseInt(data[i].price) )) {
-        PriceVariable = parseInt(data[i].price);
+      if (Number.isInteger(parseInt(data[i].Price) )) {
+        PriceVariable = parseFloat(data[i].Price.replace(',','.').replace(' ',''))
       }
       sum = sum + PriceVariable;
       setSumOfWishListedGOGGames(sum);
