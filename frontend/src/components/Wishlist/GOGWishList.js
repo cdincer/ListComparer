@@ -8,8 +8,15 @@ export default function GOGWishList() {
  
 const handleClick = async (event) => {
   event.preventDefault();
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ profileAddress: 'React POST Request Example' })
+};
+
+
     const response = await fetch(
-    'https://localhost:7181/GOG');
+    'https://localhost:7181/GOG',requestOptions);
      const data = await response.json();
      setGOGWishlist(data);
      let sum =0;
