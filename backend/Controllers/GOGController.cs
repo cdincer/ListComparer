@@ -28,9 +28,7 @@ public class GOGController : ControllerBase
     {
         GOGWishlistOptions Options = Newtonsoft.Json.JsonConvert.DeserializeObject<GOGWishlistOptions>(options.ToString());
         GOGHelper Helper = new GOGHelper();
-        //My test user
-        string url = "https://www.gog.com/en/u/listcomparer/wishlist"; //Options.profileAddress;
-        //g_rgWishlistData variable to look for.This is our wishlist variable.
+        string url = Options.profileAddress;
         HttpClient client = new HttpClient();
         string response = client.GetStringAsync(url).Result;
         List<GOGWishlist> GTBR = Helper.TitleHarvester(response);

@@ -8,13 +8,26 @@ export default function GOGWishList() {
  
 const handleClick = async (event) => {
   event.preventDefault();
+
+  var optCarrier =  require('../../Addresses.json');
+  var GOGWishListAddressVar="";
+
+  for (var i = 0; i < optCarrier.length; i++)
+  {
+      var obj = optCarrier[i];
+      if(obj.Name === 'GOGWishListAddress')
+      {
+        GOGWishListAddressVar =obj.Value;
+        break;
+      }
+  }
+
+
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ profileAddress: 'React POST Request Example' })
+    body: JSON.stringify({ profileAddress: GOGWishListAddressVar })
 };
-
-
     const response = await fetch(
     'https://localhost:7181/GOG',requestOptions);
      const data = await response.json();
