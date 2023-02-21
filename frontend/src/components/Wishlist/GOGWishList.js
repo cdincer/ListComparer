@@ -39,7 +39,7 @@ const handleClick = async (event) => {
         PriceVariable = parseFloat(data[i].Price.replace(',','.').replace(' ',''))
       }
       sum = sum + PriceVariable;
-      setSumOfWishListedGOGGames(sum);
+      setSumOfWishListedGOGGames(sum.toFixed(2));
   }
      console.log('TO-DO:Add Performance Counter');
 
