@@ -51,7 +51,7 @@ const handleClick = async (event) => {
   <table className="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Title</th>
               <th>Price</th>
             </tr>
           </thead>

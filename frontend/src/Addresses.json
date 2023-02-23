@@ -18,5 +18,10 @@
       "Name": "SteamLibrary",
       "Description": "Steam User Public Library",
       "Value": "https://steamcommunity.com/profiles/76561199468516180/games/?tab=all"
+    },
+    {
+      "Name": "GOGWishList2ndPage",
+      "Description": "2nd or more page of a GOGWishList",
+      "Value": "https://www.gog.com/public_wishlist/ExampleValue/search?hiddenFlag=0&mediaType=0&page=2&sortBy=date_added&totalPages=2"
     }
   ]
