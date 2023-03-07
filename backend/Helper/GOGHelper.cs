@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using backend.Controllers;
 
-namespace backend.Controllers.Entities
+namespace backend.Helper
 {
     public class GOGHelper
     {
