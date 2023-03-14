@@ -29,7 +29,7 @@ export default function GOGWishList() {
     const response = await fetch(
       'https://localhost:7181/GOG', requestOptions);
     const data = await response.json();
-    const newArray = SortIt(data);
+    const newArray = QuickSort(data, 0, data.length - 1);
     setGOGWishlist(newArray);
     let sum = SumOfWishList(data);
     setSumOfWishListedGOGGames(sum.toFixed(2));
@@ -38,17 +38,34 @@ export default function GOGWishList() {
   };
 
   //TO-DO:Will be implementing quick sort and slimming down the parseFloat bloat.
-  function SortIt(origArray) {
-    for (let i = 0; i < origArray.length; i++) {
-      for (let y = 0; y < origArray.length; y++) {
-        if (parseFloat(parseFloat(origArray[i].Price).toFixed(2)) < parseFloat(parseFloat(origArray[y].Price).toFixed(2))) {
-          var temp = origArray[y];
-          origArray[y] = origArray[i];
-          origArray[i] = temp;
-        }
+  function QuickSort(nums, left, right) {
+    if (left < right) {
+      let pivotIndex = Partition(nums, left, right);
+      QuickSort(nums, left, pivotIndex - 1);
+      QuickSort(nums, pivotIndex + 1, right);
+    }
+    return nums;
+  }
+
+  function Partition(nums, left, right) {
+    let pivot = Math.round(parseFloat(nums[right].Price) * 100000); //required for dealing with decimals 
+    let pivotIndex = left;
+
+    for (let i = left; i < right; i++) {
+      if (Math.round(parseFloat(nums[i].Price) * 100000) <= pivot) {
+        Swap(nums, i, pivotIndex);
+        pivotIndex++;
       }
     }
-    return origArray;
+
+    Swap(nums, pivotIndex, right);
+    return pivotIndex;
+  }
+
+  function Swap(nums, i, j) {
+    let temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
   }
 
   function SumOfWishList(WTBS) {
