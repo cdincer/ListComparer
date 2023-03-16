@@ -29,7 +29,27 @@ export default function GOGWishList() {
     const response = await fetch(
       'https://localhost:7181/GOG', requestOptions);
     const data = await response.json();
+
+    //Double TBA check for thoroughness WIP
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].Price === 'TBA') {
+        const obj = { Name: data[i].Name, Price: 'TBA' };
+        data.splice(i, 1);
+        data.push(obj);
+      }
+    }
+
     const newArray = QuickSort(data, 0, data.length - 1);
+
+    //Double TBA check for thoroughness WIP
+    for (let i = 0; i < newArray.length; i++) {
+      if (newArray[i].Price === 'TBA') {
+        const obj = { Name: newArray[i].Name, Price: 'TBA' };
+        newArray.splice(i, 1);
+        newArray.push(obj);
+      }
+    }
+
     setGOGWishlist(newArray);
     let sum = SumOfWishList(data);
     setSumOfWishListedGOGGames(sum.toFixed(2));
