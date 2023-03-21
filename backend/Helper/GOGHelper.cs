@@ -9,6 +9,26 @@ namespace backend.Helper
 {
     public class GOGHelper
     {
+
+        string OverCapacityCheckURL = "https://static.gog.com/www/default/-img/overcapacity.jpg";
+
+        ///TODO:
+        public int FindClientID(string response)
+        {
+            //gogData.clientId = "46755278331571209";
+            return 0;
+        }
+
+        public bool CheckNotOverCapacity(string response)
+        {
+            int begin = response.IndexOf(OverCapacityCheckURL);
+            if (begin > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public List<GOGWishlist> TitleHarvester(string response)
         {
             int begin = response.IndexOf("var gogData");

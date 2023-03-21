@@ -30,16 +30,23 @@ public class GOGController : ControllerBase
         AddressHelper GetWishListPage = new AddressHelper();
         GOGHelper Helper = new GOGHelper();
         HttpClient client = new HttpClient();
-        string url = "";
-
         GOGWishlistOptions Options = Newtonsoft.Json.JsonConvert.DeserializeObject<GOGWishlistOptions>(options.ToString());
+        List<GOGWishlist> FinalList = new List<GOGWishlist>();
+        string url, JsonGTBR, response = "";
+        bool overcapacityCheck = false;
         url = Options.profileAddress;
-        GetWishListPage.GetTargetAddress("GOGWishListExtraPage");
-        string response = client.GetStringAsync(url).Result;
-        List<GOGWishlist> GTBR = Helper.TitleHarvester(response);
-        GTBR = Helper.PriceHarvester(response, GTBR);
-        var JsonGTBR = JsonConvert.SerializeObject(GTBR);
 
+        while (overcapacityCheck)
+        {
+            response = client.GetStringAsync(url).Result;
+            overcapacityCheck = Helper.CheckNotOverCapacity(response);
+            List<GOGWishlist> MidList = Helper.TitleHarvester(response);
+            MidList = Helper.PriceHarvester(response, MidList);
+            FinalList.AddRange(MidList);
+
+        }
+
+        JsonGTBR = JsonConvert.SerializeObject(FinalList);
         HtmlDocument htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(response);
 
