@@ -12,11 +12,26 @@ namespace backend.Helper
 
         string OverCapacityCheckURL = "https://static.gog.com/www/default/-img/overcapacity.jpg";
 
-        ///TODO:
-        public int FindClientID(string response)
+        public string FindUserID(string response)
         {
-            //gogData.clientId = "46755278331571209";
-            return 0;
+            int begin = response.IndexOf("gog-user=") + 2;
+            int end = begin + 200; //Extra padded amount for future proofing so 
+                                   //increase in UserID's can be accounted for
+            StringBuilder BasicWishListBuilder = new StringBuilder();
+            StringBuilder ClientID = new StringBuilder();
+
+            for (int i = begin; i < end; i++)
+            {
+                BasicWishListBuilder.Append(response[i]);
+            }
+            begin = BasicWishListBuilder.ToString().IndexOf('"') + 1;
+            while (BasicWishListBuilder[begin] != '"')
+            {
+                ClientID.Append(BasicWishListBuilder[begin]);
+                begin++;
+            }
+
+            return ClientID.ToString();
         }
 
         public bool CheckNotOverCapacity(string response)

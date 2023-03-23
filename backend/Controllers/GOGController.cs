@@ -36,19 +36,11 @@ public class GOGController : ControllerBase
         bool overcapacityCheck = false;
         url = Options.profileAddress;
 
-        while (overcapacityCheck)
-        {
-            response = client.GetStringAsync(url).Result;
-            overcapacityCheck = Helper.CheckNotOverCapacity(response);
-            List<GOGWishlist> MidList = Helper.TitleHarvester(response);
-            MidList = Helper.PriceHarvester(response, MidList);
-            FinalList.AddRange(MidList);
-
-        }
-
-        JsonGTBR = JsonConvert.SerializeObject(FinalList);
-        HtmlDocument htmlDoc = new HtmlDocument();
-        htmlDoc.LoadHtml(response);
+        response = client.GetStringAsync(url).Result;
+        string test = Helper.FindUserID(response);
+        List<GOGWishlist> GTBR = Helper.TitleHarvester(response);
+        GTBR = Helper.PriceHarvester(response, GTBR);
+        JsonGTBR = JsonConvert.SerializeObject(GTBR);
 
         return JsonGTBR;
     }
