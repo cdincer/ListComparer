@@ -18,7 +18,8 @@ namespace backend.Controllers;
 public class GOGController : ControllerBase
 {
     private readonly ILogger<GOGController> _logger;
-
+    private readonly string ExtraGOGWishlistPage = "GOGWishListExtraPage";
+    private readonly string UserIDPlaceHolder = "PlaceholderValue";
     public GOGController(ILogger<GOGController> logger)
     {
         _logger = logger;
@@ -27,17 +28,20 @@ public class GOGController : ControllerBase
     [HttpPost(Name = "GOGWishlist")]
     public string Post([FromBody] object options)
     {
-        AddressHelper GetWishListPage = new AddressHelper();
+        AddressHelper GetAddress = new AddressHelper();
         GOGHelper Helper = new GOGHelper();
         HttpClient client = new HttpClient();
         GOGWishlistOptions Options = Newtonsoft.Json.JsonConvert.DeserializeObject<GOGWishlistOptions>(options.ToString());
         List<GOGWishlist> FinalList = new List<GOGWishlist>();
-        string url, JsonGTBR, response = "";
-        bool overcapacityCheck = false;
+        string? url, JsonGTBR, response = "";
         url = Options.profileAddress;
 
         response = client.GetStringAsync(url).Result;
-        string test = Helper.FindUserID(response);
+        string UserID = Helper.FindUserID(response);
+        url = GetAddress.GetTargetAddress(ExtraGOGWishlistPage);
+        url = url.Replace(UserIDPlaceHolder, UserID);
+        response = client.GetStringAsync(url).Result;
+
         List<GOGWishlist> GTBR = Helper.TitleHarvester(response);
         GTBR = Helper.PriceHarvester(response, GTBR);
         JsonGTBR = JsonConvert.SerializeObject(GTBR);
