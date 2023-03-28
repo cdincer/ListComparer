@@ -42,8 +42,8 @@ public class GOGController : ControllerBase
         url = url.Replace(UserIDPlaceHolder, UserID);
         response = client.GetStringAsync(url).Result;
 
-        List<GOGWishlist> GTBR = Helper.TitleHarvester(response);
-        GTBR = Helper.PriceHarvester(response, GTBR);
+        List<GOGWishlist> GTBR = Helper.TitleHarvesterForJSON(response);
+        GTBR = Helper.PriceHarvesterForJSON(response, GTBR);
         JsonGTBR = JsonConvert.SerializeObject(GTBR);
 
         return JsonGTBR;
