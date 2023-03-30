@@ -36,8 +36,9 @@ namespace backend.Helper
 
         public bool CheckNotOverCapacity(string response)
         {
-            int begin = response.IndexOf(OverCapacityCheckURL);
-            if (begin > 0)
+            int begin = response.IndexOf("[");
+            int end = response.LastIndexOf("]");
+            if (end - begin < 3)
             {
                 return false;
             }

@@ -22,6 +22,6 @@
     {
       "Name": "GOGWishListExtraPage",
       "Description": "2nd or more page of a GOGWishList",
-      "Value": "https://www.gog.com/public_wishlist/PlaceholderValue/search?hiddenFlag=0&mediaType=0&page=1&sortBy=date_added&totalPages=1"
+      "Value": "https://www.gog.com/public_wishlist/PlaceholderValue/search?hiddenFlag=0&mediaType=0&page=PlaceHolderPage&sortBy=date_added&totalPages=PlaceHolderTotalPage"
     }
   ]
