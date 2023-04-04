@@ -43,11 +43,7 @@ public class GOGController : ControllerBase
 
         response = client.GetStringAsync(url).Result;
         string UserID = Helper.FindUserID(response);
-        url = GetAddress.GetTargetAddress(ExtraGOGWishlistPage);
-        url = url.Replace(UserIDPlaceHolder, UserID);
-        url = url.Replace(PagePlaceHolder, CurrPagePlaceHolder);
-        url = url.Replace(TotalPagePlaceHolder, TotalPagePlaceHolder);
-        response = client.GetStringAsync(url).Result;
+        response = Helper.GetGOGPage(ExtraGOGWishlistPage, UserID, CurrPagePlaceHolder, CurrTotalPagePlaceHolder);
 
         if (Helper.CheckNotOverCapacity(response))
         {
@@ -60,16 +56,12 @@ public class GOGController : ControllerBase
 
         while (Helper.CheckNotOverCapacity(response))
         {
-            currentPage++;
-            totalCurrentPage++;
-            url = GetAddress.GetTargetAddress(ExtraGOGWishlistPage);
-            url = url.Replace(UserIDPlaceHolder, UserID);
-            url = url.Replace(PagePlaceHolder, currentPage.ToString());
-            url = url.Replace(TotalPagePlaceHolder, totalCurrentPage.ToString());
-            response = client.GetStringAsync(url).Result;
+            response = Helper.GetGOGPage(ExtraGOGWishlistPage, UserID, currentPage.ToString(), totalCurrentPage.ToString());
             List<GOGWishlist> GTBR = Helper.TitleHarvesterForJSON(response);
             GTBR = Helper.PriceHarvesterForJSON(response, GTBR);
             FinalList.AddRange(GTBR);
+            currentPage++;
+            totalCurrentPage++;
         }
         JsonGTBR = JsonConvert.SerializeObject(FinalList);
         JsonGTBR = JsonGTBR == null ? "" : JsonGTBR;
