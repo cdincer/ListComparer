@@ -124,8 +124,8 @@ export default function GOGWishList() {
                 </tr>
               )
             }
-            <tr><td>Total of All Wishlisted GOG Games</td>
-              <td>{SumOfWishListedGOGGames}</td>
+            <tr><td>Wishlist Count:{GOGWishListGames.length}</td>
+              <td>Total:{SumOfWishListedGOGGames}</td>
             </tr>
           </tbody>
         </table>
