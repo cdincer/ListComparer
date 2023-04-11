@@ -7,9 +7,29 @@ export default function SteamWishList() {
 
   const handleClick = async (event) => {
     event.preventDefault();
+
+    var optCarrier = require('../../Addresses.json');
+    var SteamWishListAddressVar = "";
+
+    for (var i = 0; i < optCarrier.length; i++) {
+      var obj = optCarrier[i];
+      if (obj.Name === 'SteamWishListAddress') {
+        console.log(obj.Value);
+        SteamWishListAddressVar = obj.Value;
+        break;
+      }
+    }
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ profileAddress: SteamWishListAddressVar })
+    };
     const response = await fetch(
-      'https://localhost:7181/Steam');
+      'https://localhost:7181/Steam', requestOptions);
+
     const data = await response.json();
+
     setSteamWishList(data);
     let sum = 0;
     for (let i = 0; i < data.length; i++) {
@@ -21,7 +41,6 @@ export default function SteamWishList() {
       setSumOfWishListedSteamGames(sum);
     }
     console.log('TO-DO:Add Performance Counter');
-
   };
 
   return (
