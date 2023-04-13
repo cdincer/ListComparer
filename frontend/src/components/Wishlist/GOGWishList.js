@@ -108,6 +108,7 @@ export default function GOGWishList() {
             <tr>
               <th>Title</th>
               <th>Price</th>
+              <th>Publisher</th>
             </tr>
           </thead>
           <tbody>
@@ -120,6 +121,9 @@ export default function GOGWishList() {
                   </td>
                   <td>
                     {game.Price}
+                  </td>
+                  <td>
+                    {game.Publisher}
                   </td>
                 </tr>
               )

@@ -41,6 +41,7 @@ public class GOGController : ControllerBase
         {
             List<GOGWishlist> GTBR = Helper.TitleHarvesterForJSON(response);
             GTBR = Helper.PriceHarvesterForJSON(response, GTBR);
+            GTBR = Helper.PublisherHarvesterForJSON(response, GTBR);
             FinalList.AddRange(GTBR);
         }
         int currentPage = 2;
@@ -51,6 +52,7 @@ public class GOGController : ControllerBase
             response = Helper.GetGOGPage(ExtraGOGWishlistPage, UserID, currentPage.ToString(), totalCurrentPage.ToString());
             List<GOGWishlist> GTBR = Helper.TitleHarvesterForJSON(response);
             GTBR = Helper.PriceHarvesterForJSON(response, GTBR);
+            GTBR = Helper.PublisherHarvesterForJSON(response, GTBR);
             FinalList.AddRange(GTBR);
             currentPage++;
             totalCurrentPage++;

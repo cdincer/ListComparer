@@ -159,6 +159,48 @@ namespace backend.Helper
             }
             return GTBR;
         }
+
+        public List<GOGWishlist> PublisherHarvesterForJSON(string response, List<GOGWishlist> HarvestedTitles)
+        {
+            int begin = response.IndexOf("{");
+            int end = response.LastIndexOf("}");//End with some to spare that's why we subtract the 4.
+            StringBuilder BasicWishListBuilder = new StringBuilder();
+            List<string> ItemsToAdd = new List<string>();
+            List<GOGWishlist> GTBR = new List<GOGWishlist>();
+
+            for (int i = begin; i < end; i++)
+            {
+                BasicWishListBuilder.Append(response[i]);
+            }
+
+            while (BasicWishListBuilder.ToString().Contains("\"publisher\":"))
+            {
+                //Find id variables
+                int startIndex = BasicWishListBuilder.ToString().IndexOf("\"publisher\":");
+                int idIndex = startIndex + 13;
+                StringBuilder IdBuilder = new StringBuilder();
+
+                //Start Id
+                while (BasicWishListBuilder[idIndex] != '"')
+                {
+                    IdBuilder.Append(BasicWishListBuilder[idIndex]);
+                    idIndex++;
+                }
+                //Finally add our id to list
+                ItemsToAdd.Add(IdBuilder.ToString());
+                BasicWishListBuilder.Remove(startIndex, 14);
+
+                IdBuilder.Clear();
+            }
+
+            int TitleIndex = 0;
+            foreach (string Item in ItemsToAdd)
+            {
+                GTBR.Add(new GOGWishlist { Name = HarvestedTitles[TitleIndex].Name, Publisher = Item, Price = HarvestedTitles[TitleIndex].Price });
+                TitleIndex++;
+            }
+            return GTBR;
+        }
         #endregion
         #region Old Harvesters
         public List<GOGWishlist> TitleHarvesterForScraping(string response)
