@@ -6,7 +6,8 @@ namespace backend.Helper
 {
     public class SteamHelper
     {
-        public List<SteamWishList> TitleHarvester(string response)
+        ///Get all the Appid from the initial wishlist so it can be used in the NamePriceHarvester
+        public List<SteamWishList> WishlistHarvester(string response)
         {
             int begin = response.IndexOf("[");
             int end = response.IndexOf("]");//End with some to spare that's why we subtract the 4.
@@ -37,8 +38,8 @@ namespace backend.Helper
             BasicWishListBuilder.Clear();
             return STBR;
         }
-        //https://store.steampowered.com/app/217200 Worms Armageddon page
-        //https://store.steampowered.com/app/374320 DARK SOULS™ III page
+
+        //Use the appid to make calls to indiviual pages to get more details.
         public List<SteamWishList> NamePriceHarvester(List<SteamWishList> WishList)
         {
             string url = "https://store.steampowered.com/app/";

@@ -21,12 +21,9 @@ public class SteamController : ControllerBase
     [HttpPost(Name = "SteamWishlist")]
     public string Get([FromBody] object options)
     {
-        //My test user
-        //string url = "https://store.steampowered.com/wishlist/profiles/76561199468516180/#sort=order";
-        SteamWishlistOptions Options = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamWishlistOptions>(options.ToString());
-        //g_rgWishlistData variable to look for.This is our wishlist variable.
         SteamHelper steamHelper = new SteamHelper();
         HttpClient client = new HttpClient();
+        SteamWishlistOptions Options = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamWishlistOptions>(options.ToString());
         string url = Options.profileAddress;
 
         string response = client.GetStringAsync(url).Result;
@@ -41,7 +38,7 @@ public class SteamController : ControllerBase
         }
 
 
-        List<SteamWishList> STBR = steamHelper.TitleHarvester(BasicWishListBuilder.ToString());
+        List<SteamWishList> STBR = steamHelper.WishlistHarvester(BasicWishListBuilder.ToString());
         STBR = steamHelper.NamePriceHarvester(STBR);
         var JsonSTBR = JsonConvert.SerializeObject(STBR);
         BasicWishListBuilder.Clear();
