@@ -34,8 +34,8 @@ export default function SteamWishList() {
     let sum = 0;
     for (let i = 0; i < data.length; i++) {
       let PriceVariable = 0;
-      if (Number.isInteger(parseInt(data[i].price))) {
-        PriceVariable = parseInt(data[i].price);
+      if (Number.isInteger(parseInt(data[i].Price))) {
+        PriceVariable = parseInt(data[i].Price);
       }
       sum = sum + PriceVariable;
       setSumOfWishListedSteamGames(sum);
@@ -49,9 +49,9 @@ export default function SteamWishList() {
         <table className="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>AppId</th>
-              <th>Title</th>
+              <th>Title </th>
               <th>Price</th>
+              <th>Publisher</th>
             </tr>
           </thead>
           <tbody>
@@ -60,20 +60,20 @@ export default function SteamWishList() {
               SteamWishListGames.map((game, key) =>
                 <tr key={key}>
                   <td>
-                    {game.appid}
+                    {game.Title}
                   </td>
                   <td>
-                    {game.title}
+                    {game.Price}
                   </td>
                   <td>
-                    {game.price}
+                    {game.Publisher}
                   </td>
                 </tr>
               )
             }
             <tr><td>Wishlist Count:{SteamWishListGames.length}</td>
-              <td></td>
               <td>Total:{SumOfWishListedSteamGames}</td>
+              <td></td>
             </tr>
           </tbody>
         </table>

@@ -33,7 +33,7 @@ namespace backend.Helper
             List<SteamWishList> STBR = new List<SteamWishList>();
             foreach (string Item in ItemsToAdd)
             {
-                STBR.Add(new SteamWishList { appid = Item, added = "PlaceHolder" });
+                STBR.Add(new SteamWishList { Appid = Item, Added = "PlaceHolder" });
             }
             BasicWishListBuilder.Clear();
             return STBR;
@@ -48,13 +48,17 @@ namespace backend.Helper
             foreach (SteamWishList item in WishList)
             {
                 HttpClient client = new HttpClient();
-                string response = client.GetStringAsync(url + item.appid).Result;
+                string response = client.GetStringAsync(url + item.Appid).Result;
                 string ItemPrice = "";
                 string Title = "";
                 HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
                 document.LoadHtml(response);
                 HtmlNode title = document.GetElementbyId("appHubAppName");
                 HtmlNodeCollection price = document.DocumentNode.SelectNodes("//div[contains(@class, 'game_purchase_price')]");
+                HtmlNodeCollection SummarGridList = document.DocumentNode.SelectNodes("//div[contains(@class, 'grid_content')]");
+                HtmlNode PublisherGrid = SummarGridList[1];
+                string Publisher = PublisherGrid.InnerText.Replace("\t", "").Replace("\r", "").Replace("\n", "");
+
                 if (price != null)
                 {
                     ItemPrice = price[0].InnerHtml;
@@ -75,7 +79,7 @@ namespace backend.Helper
                     emptyCheck++;
                 }
 
-                STBR.Add(new SteamWishList { appid = item.appid, title = Title, added = "PlaceHolder", price = ItemPrice });
+                STBR.Add(new SteamWishList { Appid = item.Appid, Title = Title, Added = "-", Price = ItemPrice, Publisher = Publisher });
                 client.Dispose();
             }
             return STBR;

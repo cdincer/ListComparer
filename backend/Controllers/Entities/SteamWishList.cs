@@ -2,9 +2,9 @@ namespace backend.Controllers;
 
 public class SteamWishList
 {
-    public string? appid { get; set; }
-    public string? title { get; set; }
-    public string? added { get; set; }
-    public string? priority { get; set; }
-    public string? price { get; set; }
+    public string? Appid { get; set; }
+    public string? Title { get; set; }
+    public string? Added { get; set; }
+    public string? Price { get; set; }
+    public string? Publisher { get; set; }
 }
