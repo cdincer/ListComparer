@@ -57,7 +57,7 @@ export default function GOGWishList() {
 
   };
 
-  //TO-DO:Will be implementing quick sort and slimming down the parseFloat bloat.
+  //TO-DO:Slimming down the parseFloat bloat.
   function QuickSort(nums, left, right) {
     if (left < right) {
       let pivotIndex = Partition(nums, left, right);

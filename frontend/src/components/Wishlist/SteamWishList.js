@@ -30,18 +30,56 @@ export default function SteamWishList() {
 
     const data = await response.json();
 
-    setSteamWishList(data);
-    let sum = 0;
-    for (let i = 0; i < data.length; i++) {
-      let PriceVariable = 0;
-      if (Number.isInteger(parseInt(data[i].Price))) {
-        PriceVariable = parseInt(data[i].Price);
-      }
-      sum = sum + PriceVariable;
-      setSumOfWishListedSteamGames(sum);
-    }
+    const newArray = QuickSort(data, 0, data.length - 1);
+    setSteamWishList(newArray);
+    let sum = SumOfWishList(newArray);
+    setSumOfWishListedSteamGames(sum.toFixed(2));
+
     console.log('TO-DO:Add Performance Counter');
   };
+
+  //TO-DO:Slimming down the parseFloat bloat.
+  function QuickSort(nums, left, right) {
+    if (left < right) {
+      let pivotIndex = Partition(nums, left, right);
+      QuickSort(nums, left, pivotIndex - 1);
+      QuickSort(nums, pivotIndex + 1, right);
+    }
+    return nums;
+  }
+
+  function Partition(nums, left, right) {
+    let pivot = Math.round(parseFloat(nums[right].Price) * 100000); //required for dealing with decimals 
+    let pivotIndex = left;
+
+    for (let i = left; i < right; i++) {
+      if (Math.round(parseFloat(nums[i].Price) * 100000) <= pivot) {
+        Swap(nums, i, pivotIndex);
+        pivotIndex++;
+      }
+    }
+
+    Swap(nums, pivotIndex, right);
+    return pivotIndex;
+  }
+
+  function Swap(nums, i, j) {
+    let temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+  }
+
+  function SumOfWishList(WTBS) {
+    let sum = 0;
+    for (let i = 0; i < WTBS.length; i++) {
+      let PriceVariable = 0;
+      if (Number.isInteger(parseInt(WTBS[i].Price))) {
+        PriceVariable = parseFloat(WTBS[i].Price.replace(',', '.').replace(' ', ''))
+      }
+      sum = sum + PriceVariable;
+    }
+    return sum;
+  }
 
   return (
     <Container className="container">
