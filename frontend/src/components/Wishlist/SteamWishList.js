@@ -29,6 +29,10 @@ export default function SteamWishList() {
       'https://localhost:7181/Steam', requestOptions);
 
     const data = await response.json();
+    //    console.log(nums[right].Price.replace(/,/, "."));
+    for (let i = 0; i < data.length; i++) {
+      data[i].Price = data[i].Price.replace(/,/, ".");
+    }
 
     const newArray = QuickSort(data, 0, data.length - 1);
     setSteamWishList(newArray);

@@ -66,7 +66,19 @@ namespace backend.Helper
                 }
                 else
                 {
-                    ItemPrice = "0";
+                    //Look for discounted price
+                    //"<meta itemprop=\"price\" content=\"9,99\">"
+                    HtmlNodeCollection DiscountPrice = document.DocumentNode.SelectNodes("//meta[contains(@itemprop, 'price')]");
+                    string OuterHtml = DiscountPrice[1].OuterHtml;
+                    int SoDPrice = OuterHtml.IndexOf("content=\"") + 9;
+                    StringBuilder itemPrice = new StringBuilder();
+                    while (OuterHtml[SoDPrice] != '"')
+                    {
+                        itemPrice.Append(OuterHtml[SoDPrice]);
+                        SoDPrice++;
+                    }
+                    string finished = itemPrice.ToString();
+                    ItemPrice = finished;
                 }
                 int emptyCheck = 0;
                 if (title != null)
