@@ -201,6 +201,8 @@ namespace backend.Helper
             }
             return GTBR;
         }
+        //TO-DO:Get currency value
+
         #endregion
         #region Old Harvesters
         public List<GOGWishlist> TitleHarvesterForScraping(string response)

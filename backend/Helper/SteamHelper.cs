@@ -44,6 +44,7 @@ namespace backend.Helper
         {
             string url = "https://store.steampowered.com/app/";
             List<SteamWishList> STBR = new List<SteamWishList>();
+            string CurrencySymbol = "";
 
             foreach (SteamWishList item in WishList)
             {
@@ -66,19 +67,9 @@ namespace backend.Helper
                 }
                 else
                 {
-                    //Look for discounted price
-                    //"<meta itemprop=\"price\" content=\"9,99\">"
-                    HtmlNodeCollection DiscountPrice = document.DocumentNode.SelectNodes("//meta[contains(@itemprop, 'price')]");
-                    string OuterHtml = DiscountPrice[1].OuterHtml;
-                    int SoDPrice = OuterHtml.IndexOf("content=\"") + 9;
-                    StringBuilder itemPrice = new StringBuilder();
-                    while (OuterHtml[SoDPrice] != '"')
-                    {
-                        itemPrice.Append(OuterHtml[SoDPrice]);
-                        SoDPrice++;
-                    }
-                    string finished = itemPrice.ToString();
-                    ItemPrice = finished;
+                    price = document.DocumentNode.SelectNodes("//div[contains(@class, 'discount_final_price')]");
+                    ItemPrice = price[0].InnerHtml;
+                    price.Clear();
                 }
                 int emptyCheck = 0;
                 if (title != null)
