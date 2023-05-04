@@ -46,7 +46,7 @@ public class GOGController : ControllerBase
         }
         int currentPage = 2;
         int totalCurrentPage = 2;
-
+        //TO-DO:Prevent redudant call on single page wishlist.
         while (Helper.CheckNotOverCapacity(response))
         {
             response = Helper.GetGOGPage(ExtraGOGWishlistPage, UserID, currentPage.ToString(), totalCurrentPage.ToString());

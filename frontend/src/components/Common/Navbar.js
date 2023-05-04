@@ -8,15 +8,15 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   return (
     <Navbar2 className="navbar navbar-inverse" expand="lg">
-    <Container className="container">
-    <Navbar2.Brand className="navbar-brand" href="#home">Navbar with text</Navbar2.Brand>     
-      <Nav className="me-auto">
-            <Nav.Link  href="/">Home</Nav.Link>         
-            <span>|</span><NavLink  to="/library">Library</NavLink>
-            <span>|</span><NavLink  to="/about">About</NavLink>
-            </Nav>
-    </Container>
-  </Navbar2>
+      <Container className="container">
+        <Navbar2.Brand className="navbar-brand" href="#home">List Comparer</Navbar2.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="/">Home</Nav.Link>
+          <span>|</span><NavLink to="/library">Library</NavLink>
+          <span>|</span><NavLink to="/about">About</NavLink>
+        </Nav>
+      </Container>
+    </Navbar2>
   );
 };
 

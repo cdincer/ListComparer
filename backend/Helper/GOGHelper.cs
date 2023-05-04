@@ -108,6 +108,18 @@ namespace backend.Helper
             List<string> ItemsToAdd = new List<string>();
             List<GOGWishlist> GTBR = new List<GOGWishlist>();
 
+            #region Get Currency Type
+            int Currencybegin = response.IndexOf("currency\":\"") + 11;
+            string currencyType = "";
+            while (response[Currencybegin].ToString() != "\"")
+            {
+                currencyType += response[Currencybegin];
+                Currencybegin++;
+            }
+            #endregion
+
+
+
             for (int i = begin; i < end; i++)
             {
                 BasicWishListBuilder.Append(response[i]);
