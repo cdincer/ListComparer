@@ -20,7 +20,6 @@ export default function GOGWishList() {
       }
     }
 
-
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -29,6 +28,8 @@ export default function GOGWishList() {
     const response = await fetch(
       'https://localhost:7181/GOG', requestOptions);
     const data = await response.json();
+
+    //TO-DO:find something to replace unicode stuff like "\u00ae" or "\u2122"
 
     //Double TBA check for thoroughness WIP
     for (let i = 0; i < data.length; i++) {

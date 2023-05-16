@@ -28,15 +28,15 @@ public class GOGController : ControllerBase
         GOGHelper Helper = new GOGHelper();
         HttpClient client = new HttpClient();
         GOGWishlistOptions Options = Newtonsoft.Json.JsonConvert.DeserializeObject<GOGWishlistOptions>(options.ToString());
-        List<GOGWishlist> FinalList = new List<GOGWishlist>();
         string? url, JsonGTBR, response = "";
         JsonGTBR = "";
         url = Options.profileAddress;
-
+        EpicHelper epicHelper = new EpicHelper();
+        epicHelper.TimeHarvester();
         response = client.GetStringAsync(url).Result;
         string UserID = Helper.FindUserID(response);
         response = Helper.GetGOGPage(ExtraGOGWishlistPage, UserID, CurrPagePlaceHolder, CurrTotalPagePlaceHolder);
-
+        List<GOGWishlist> FinalList = new List<GOGWishlist>();
         if (Helper.CheckNotOverCapacity(response))
         {
             List<GOGWishlist> GTBR = Helper.TitleHarvesterForJSON(response);
