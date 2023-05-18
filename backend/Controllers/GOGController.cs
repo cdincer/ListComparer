@@ -32,7 +32,8 @@ public class GOGController : ControllerBase
         JsonGTBR = "";
         url = Options.profileAddress;
         EpicHelper epicHelper = new EpicHelper();
-        epicHelper.TimeHarvester();
+        epicHelper.TimeHarvesterEnd();
+        epicHelper.TimeHarvesterStart();
         response = client.GetStringAsync(url).Result;
         string UserID = Helper.FindUserID(response);
         response = Helper.GetGOGPage(ExtraGOGWishlistPage, UserID, CurrPagePlaceHolder, CurrTotalPagePlaceHolder);
