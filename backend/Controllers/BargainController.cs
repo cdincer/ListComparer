@@ -14,7 +14,7 @@ public class BargainController : ControllerBase
     {
         EpicHelper epicHelper = new EpicHelper();
         string BargainTBR = "";
-        List<EpicFreeGames> Names = new List<EpicFreeGames>();
+        List<BargainFreeGames> Names = new List<BargainFreeGames>();
         Names = epicHelper.NameHarvester();
         Names = epicHelper.TimeHarvesterStart(Names);
         Names = epicHelper.TimeHarvesterEnd(Names);

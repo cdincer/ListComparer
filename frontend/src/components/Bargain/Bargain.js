@@ -16,15 +16,7 @@ export default function Bargain() {
             'https://localhost:7181/Bargain', requestOptions);
 
         const data = await response.json();
-        //    console.log(nums[right].Price.replace(/,/, "."));
-        // for (let i = 0; i < data.length; i++) {
-        //     data[i].Price = data[i].Price.replace(/,/, ".");
-        // }
-
-        // const newArray = QuickSort(data, 0, data.length - 1);
         setEpicFreeList(data);
-        // let sum = SumOfWishList(newArray);
-
         console.log('TO-DO:Add Performance Counter');
     };
 
@@ -40,6 +32,7 @@ export default function Bargain() {
                             <th>Title </th>
                             <th>TimeStart</th>
                             <th>TimeEnd</th>
+                            <th>Website</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,13 +48,16 @@ export default function Bargain() {
                                     <td>
                                         {game.TimeEnd}
                                     </td>
+                                    <td>
+                                        {game.Website}
+                                    </td>
                                 </tr>
                             )
                         }
                     </tbody>
                 </table>
                 <form onSubmit={handleClick}>
-                    <button type="submit" className="btn">Get Steam WishList</button>
+                    <button type="submit" className="btn">Get Bargains</button>
                 </form>
             </div>
         </Container>

@@ -7,7 +7,8 @@ namespace backend.Helper
     public class EpicHelper
     {
 
-        public List<EpicFreeGames> NameHarvester()
+        public string SourceWebSite = "Epic Games";
+        public List<BargainFreeGames> NameHarvester()
         {
             //https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions
             string url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions";
@@ -16,7 +17,7 @@ namespace backend.Helper
 
             int begin = response.IndexOf("{");
             int end = response.LastIndexOf("}");
-            List<EpicFreeGames> GTBR = new List<EpicFreeGames>();
+            List<BargainFreeGames> GTBR = new List<BargainFreeGames>();
             List<string> ItemsToAdd = new List<string>();
 
             StringBuilder BasicWishListBuilder = new StringBuilder();
@@ -40,12 +41,12 @@ namespace backend.Helper
             }
             foreach (string Item in ItemsToAdd)
             {
-                GTBR.Add(new EpicFreeGames { Name = Item });
+                GTBR.Add(new BargainFreeGames { Name = Item });
             }
             return GTBR;
         }
 
-        public List<EpicFreeGames> TimeHarvesterStart(List<EpicFreeGames> HarvestedTitles)
+        public List<BargainFreeGames> TimeHarvesterStart(List<BargainFreeGames> HarvestedTitles)
         {
             //https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions
             string url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions";
@@ -54,7 +55,7 @@ namespace backend.Helper
 
             int begin = response.IndexOf("{");
             int end = response.LastIndexOf("}");
-            List<EpicFreeGames> GTBR = new List<EpicFreeGames>();
+            List<BargainFreeGames> GTBR = new List<BargainFreeGames>();
             List<string> ItemsToAdd = new List<string>();
 
             StringBuilder BasicWishListBuilder = new StringBuilder();
@@ -79,7 +80,7 @@ namespace backend.Helper
             int TitleIndex = 0;
             foreach (string Item in ItemsToAdd)
             {
-                GTBR.Add(new EpicFreeGames { Name = HarvestedTitles[TitleIndex].Name, TimeStart = Item });
+                GTBR.Add(new BargainFreeGames { Name = HarvestedTitles[TitleIndex].Name, TimeStart = Item });
                 TitleIndex++;
             }
             return GTBR;
@@ -87,7 +88,7 @@ namespace backend.Helper
 
         //Only real free products have a ExpiryDate, dummy products 
         //like Mysterious Game and Borderlands 3 Pass don't have anything
-        public List<EpicFreeGames> TimeHarvesterEnd(List<EpicFreeGames> HarvestedTitles)
+        public List<BargainFreeGames> TimeHarvesterEnd(List<BargainFreeGames> HarvestedTitles)
         {
             //https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions
             string url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions";
@@ -96,7 +97,7 @@ namespace backend.Helper
 
             int begin = response.IndexOf("{");
             int end = response.LastIndexOf("}");
-            List<EpicFreeGames> GTBR = new List<EpicFreeGames>();
+            List<BargainFreeGames> GTBR = new List<BargainFreeGames>();
             List<string> ItemsToAdd = new List<string>();
 
             StringBuilder BasicWishListBuilder = new StringBuilder();
@@ -121,7 +122,13 @@ namespace backend.Helper
             int TitleIndex = 0;
             foreach (string Item in ItemsToAdd)
             {
-                GTBR.Add(new EpicFreeGames { Name = HarvestedTitles[TitleIndex].Name, TimeStart = HarvestedTitles[TitleIndex].TimeStart, TimeEnd = Item });
+                GTBR.Add(new BargainFreeGames
+                {
+                    Name = HarvestedTitles[TitleIndex].Name,
+                    Website = SourceWebSite,
+                    TimeStart = HarvestedTitles[TitleIndex].TimeStart,
+                    TimeEnd = Item
+                });
                 TitleIndex++;
             }
             return GTBR;

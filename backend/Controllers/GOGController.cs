@@ -32,7 +32,7 @@ public class GOGController : ControllerBase
         JsonGTBR = "";
         url = Options.profileAddress;
         EpicHelper epicHelper = new EpicHelper();
-        List<EpicFreeGames> Names = new List<EpicFreeGames>();
+        List<BargainFreeGames> Names = new List<BargainFreeGames>();
         Names = epicHelper.NameHarvester();
         Names = epicHelper.TimeHarvesterStart(Names);
         Names = epicHelper.TimeHarvesterEnd(Names);
