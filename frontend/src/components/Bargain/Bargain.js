@@ -57,7 +57,7 @@ export default function Bargain() {
                     </tbody>
                 </table>
                 <form onSubmit={handleClick}>
-                    <button type="submit" className="btn">Get Bargains</button>
+                    <button type="submit" className="btn">Get Bargains/Deals</button>
                 </form>
             </div>
         </Container>

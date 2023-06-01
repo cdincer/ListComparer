@@ -44,7 +44,6 @@ namespace backend.Helper
         {
             string url = "https://store.steampowered.com/app/";
             List<SteamWishList> STBR = new List<SteamWishList>();
-            string CurrencySymbol = "";
 
             foreach (SteamWishList item in WishList)
             {

@@ -18,6 +18,11 @@ public class BargainController : ControllerBase
         Names = epicHelper.NameHarvester();
         Names = epicHelper.TimeHarvesterStart(Names);
         Names = epicHelper.TimeHarvesterEnd(Names);
+
+        AmazonHelper amazonHelper = new AmazonHelper();
+        amazonHelper.NameHarvester();
+
+
         BargainTBR = JsonConvert.SerializeObject(Names);
         return BargainTBR;
     }
