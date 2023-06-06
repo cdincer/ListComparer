@@ -6,7 +6,7 @@ namespace backend.Helper
 {
     public class AmazonHelper
     {
-        //https://scrapfly.io/blog/web-scraping-graphql-with-python/
+        // <button class="tw-interactive tw-block tw-border-radius-pill tw-full-width tw-interactable tw-interactable--alpha tw-interactable--selected" data-type="Game" data-a-target="offer-filter-button-Game-selected"><div class="tw-pd-x-1 tw-pd-y-05 tw-sm-pd-x-2 tw-sm-pd-y-1"><div class="tw-pd-x-05 tw-pd-y-05"><p class="offer-filters__button__title offer-filters__button__title--Game tw-amazon-ember-bold tw-c-text-white tw-font-size-7 tw-md-font-size-4 tw-nowrap tw-sm-font-size-5" title="Weekly game">Weekly game</p></div></div></button>
         public async void NameHarvester()
         {
             string url = "https://gaming.amazon.com/home";
@@ -20,9 +20,8 @@ namespace backend.Helper
             page.DefaultTimeout = 0; // or you can set this as 0
             await page.GoToAsync(url, WaitUntilNavigation.Networkidle2);
             var content = await page.GetContentAsync();
-
             Console.WriteLine(content);
-
+            await browser.CloseAsync();
 
             int begin = response.IndexOf("{");
             int end = response.LastIndexOf("}");
