@@ -4,10 +4,12 @@ using PuppeteerSharp;
 
 namespace backend.Helper
 {
-    public class AmazonHelper
+    public class  AmazonHelper
     {
-        // <button class="tw-interactive tw-block tw-border-radius-pill tw-full-width tw-interactable tw-interactable--alpha tw-interactable--selected" data-type="Game" data-a-target="offer-filter-button-Game-selected"><div class="tw-pd-x-1 tw-pd-y-05 tw-sm-pd-x-2 tw-sm-pd-y-1"><div class="tw-pd-x-05 tw-pd-y-05"><p class="offer-filters__button__title offer-filters__button__title--Game tw-amazon-ember-bold tw-c-text-white tw-font-size-7 tw-md-font-size-4 tw-nowrap tw-sm-font-size-5" title="Weekly game">Weekly game</p></div></div></button>
-        public async void NameHarvester()
+        //<button aria-label=\"Claim game Sengoku 2\"
+        //<button aria-label=\"Claim game Planescape Torment: Enhanced Edition\"
+        //Endings Example for Mutation Nation: title=\"Ends in\">Ends in</span> 177 days
+        public async Task<List<BargainFreeGames>> NameHarvester()
         {
             string url = "https://gaming.amazon.com/home";
             string response = "";
@@ -20,11 +22,10 @@ namespace backend.Helper
             page.DefaultTimeout = 0; // or you can set this as 0
             await page.GoToAsync(url, WaitUntilNavigation.Networkidle2);
             var content = await page.GetContentAsync();
-            Console.WriteLine(content);
             await browser.CloseAsync();
-
-            int begin = response.IndexOf("{");
-            int end = response.LastIndexOf("}");
+            response = content;
+            int begin = response.IndexOf("<button aria-label=\"Claim game");
+            int end = response.LastIndexOf("<button aria-label=\"Claim game");
             List<BargainFreeGames> GTBR = new List<BargainFreeGames>();
             List<string> ItemsToAdd = new List<string>();
 
@@ -33,12 +34,12 @@ namespace backend.Helper
             {
                 BasicWishListBuilder.Append(response[i]);
             }
-            while (BasicWishListBuilder.ToString().Contains("\"title\":"))
+            while (BasicWishListBuilder.ToString().Contains("<button aria-label=\"Claim game"))
             {
-                int startIndex = BasicWishListBuilder.ToString().IndexOf("\"title\":");
-                int gameIndex = startIndex + 9;
+                int startIndex = BasicWishListBuilder.ToString().IndexOf("<button aria-label=\"Claim game");
+                int gameIndex = startIndex + 31;
                 StringBuilder GameName = new StringBuilder();
-                while (BasicWishListBuilder[gameIndex] != '"')
+                while (BasicWishListBuilder[gameIndex] != '\"')
                 {
                     GameName.Append(BasicWishListBuilder[gameIndex]);
                     gameIndex++;
@@ -51,6 +52,7 @@ namespace backend.Helper
             {
                 GTBR.Add(new BargainFreeGames { Name = Item });
             }
+            return GTBR;
         }
     }
 }

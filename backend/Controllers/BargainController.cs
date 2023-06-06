@@ -10,20 +10,20 @@ namespace backend.Controllers;
 public class BargainController : ControllerBase
 {
     [HttpGet(Name = "Bargains")]
-    public string Get()
+    public async Task<string> Get()
     {
         EpicHelper epicHelper = new EpicHelper();
         string BargainTBR = "";
-        List<BargainFreeGames> Names = new List<BargainFreeGames>();
-        Names = epicHelper.NameHarvester();
-        Names = epicHelper.TimeHarvesterStart(Names);
-        Names = epicHelper.TimeHarvesterEnd(Names);
+        List<BargainFreeGames> EpicGames = new List<BargainFreeGames>();
+        EpicGames = epicHelper.NameHarvester();
+        EpicGames = epicHelper.TimeHarvesterStart(EpicGames);
+        EpicGames = epicHelper.TimeHarvesterEnd(EpicGames);
 
         AmazonHelper amazonHelper = new AmazonHelper();
-        amazonHelper.NameHarvester();
+        List<BargainFreeGames>  AmazonGames = await amazonHelper.NameHarvester();
+        EpicGames.AddRange((IEnumerable<BargainFreeGames>)AmazonGames);
 
-
-        BargainTBR = JsonConvert.SerializeObject(Names);
+        BargainTBR = JsonConvert.SerializeObject(EpicGames);
         return BargainTBR;
     }
 
