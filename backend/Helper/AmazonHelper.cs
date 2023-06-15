@@ -17,7 +17,6 @@ namespace backend.Helper
         public async Task<List<BargainFreeGames>> NameHarvester()
         {
             string url = "https://gaming.amazon.com/home";
-            string response = "";
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
             IBrowser browser = await Puppeteer.LaunchAsync(new LaunchOptions
             {
@@ -30,30 +29,24 @@ namespace backend.Helper
             var content = await page.GetContentAsync();
             HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(content);
-            HtmlNodeCollection price = document.DocumentNode.SelectNodes("//div[contains(@data-a-target, 'claim-prime-offer-card')]");
+            HtmlNodeCollection AvailableGames = document.DocumentNode.SelectNodes("//div[contains(@data-a-target, 'claim-prime-offer-card')]");
+            HtmlNodeCollection AvailableDates = document.DocumentNode.SelectNodes("//div[contains(@class, 'item-card__availability-date')]");
             await browser.CloseAsync();
-            int begin = response.IndexOf("<button aria-label=\"Claim game");
-            int end = response.LastIndexOf("<button aria-label=\"Claim game");
             List<BargainFreeGames> GTBR = new List<BargainFreeGames>();
             List<string> ItemsToAdd = new List<string>();
-
-            StringBuilder BasicWishListBuilder = new StringBuilder();
-            for (int i = begin; i < end; i++)
+            foreach (HtmlNode Item in AvailableGames)
             {
-                BasicWishListBuilder.Append(response[i]);
-            }
-            while (BasicWishListBuilder.ToString().Contains("<button aria-label=\"Claim game"))
-            {
-                int startIndex = BasicWishListBuilder.ToString().IndexOf("<button aria-label=\"Claim game");
-                int gameIndex = startIndex + 31;
+                int startIndex = Item.OuterHtml.ToString().IndexOf("<div aria-label=\"");
+                int gameIndex = startIndex + 17;
+                string Days = Item.InnerText;
+                string GameNameText = Item.OuterHtml.ToString();
                 StringBuilder GameName = new StringBuilder();
-                while (BasicWishListBuilder[gameIndex] != '\"')
+                while (GameNameText[gameIndex] != '\"')
                 {
-                    GameName.Append(BasicWishListBuilder[gameIndex]);
+                    GameName.Append(GameNameText[gameIndex]);
                     gameIndex++;
                 }
                 ItemsToAdd.Add(GameName.ToString());
-                BasicWishListBuilder.Remove(startIndex, 8);
                 GameName.Clear();
             }
             foreach (string Item in ItemsToAdd)
