@@ -129,6 +129,8 @@ namespace backend.Helper
                     TimeEnd = Item
                 });
                 TitleIndex++;
+                if (TitleIndex >= HarvestedTitles.Count)
+                    break;
             }
             return GTBR;
         }

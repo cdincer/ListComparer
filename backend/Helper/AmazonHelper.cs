@@ -33,12 +33,22 @@ namespace backend.Helper
             HtmlNodeCollection AvailableDates = document.DocumentNode.SelectNodes("//div[contains(@class, 'item-card__availability-date')]");
             await browser.CloseAsync();
             List<BargainFreeGames> GTBR = new List<BargainFreeGames>();
-            List<string> ItemsToAdd = new List<string>();
             foreach (HtmlNode Item in AvailableGames)
             {
                 int startIndex = Item.OuterHtml.ToString().IndexOf("<div aria-label=\"");
                 int gameIndex = startIndex + 17;
                 string Days = Item.InnerText;
+                StringBuilder ExpirationDate = new StringBuilder();
+                for (int i = 0; i < Days.Length; i++)
+                {
+                    if (48 <= Days[i] && Days[i] <= 57)
+                    {
+                        ExpirationDate.Append(Days[i]);
+                    }
+                    if (ExpirationDate.Length >= 3)
+                        break;
+                }
+                ExpirationDate.Append(" days left");
                 string GameNameText = Item.OuterHtml.ToString();
                 StringBuilder GameName = new StringBuilder();
                 while (GameNameText[gameIndex] != '\"')
@@ -46,13 +56,11 @@ namespace backend.Helper
                     GameName.Append(GameNameText[gameIndex]);
                     gameIndex++;
                 }
-                ItemsToAdd.Add(GameName.ToString());
+                GTBR.Add(new BargainFreeGames { Name = GameName.ToString(), TimeEnd = ExpirationDate.ToString(), Website = "Prime Gaming" });
                 GameName.Clear();
+                ExpirationDate.Clear();
             }
-            foreach (string Item in ItemsToAdd)
-            {
-                GTBR.Add(new BargainFreeGames { Name = Item });
-            }
+
             return GTBR;
         }
     }
