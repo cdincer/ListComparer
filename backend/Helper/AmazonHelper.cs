@@ -25,7 +25,16 @@ namespace backend.Helper
 
             var page = await browser.NewPageAsync();
             page.DefaultTimeout = 0; // or you can set this as 0
-            await page.GoToAsync(url, WaitUntilNavigation.Networkidle2);
+            await page.GoToAsync(url, WaitUntilNavigation.Load);
+            var content2 = await page.GetContentAsync();
+            Thread.Sleep(4000);
+            await page.ClickAsync("button[data-a-target=\"offer-filter-button-Game\"]");
+            await page.Mouse.WheelAsync(2000, 2000);
+            Thread.Sleep(2000);
+            await page.Mouse.WheelAsync(2000, 2000);
+            Thread.Sleep(2000);
+            await page.Mouse.WheelAsync(2000, 2000);
+            //await page.EvaluateExpressionAsync("window.scrollTo(0,window.document.body.scrollHeight)");
             var content = await page.GetContentAsync();
             HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(content);
@@ -33,6 +42,7 @@ namespace backend.Helper
             HtmlNodeCollection AvailableDates = document.DocumentNode.SelectNodes("//div[contains(@class, 'item-card__availability-date')]");
             await browser.CloseAsync();
             List<BargainFreeGames> GTBR = new List<BargainFreeGames>();
+            HashSet<string> gameCounter = new();
             foreach (HtmlNode Item in AvailableGames)
             {
                 int startIndex = Item.OuterHtml.ToString().IndexOf("<div aria-label=\"");
@@ -56,11 +66,17 @@ namespace backend.Helper
                     GameName.Append(GameNameText[gameIndex]);
                     gameIndex++;
                 }
-                GTBR.Add(new BargainFreeGames { Name = GameName.ToString(), TimeEnd = ExpirationDate.ToString(), Website = "Prime Gaming" });
+                BargainFreeGames newItem = new BargainFreeGames { Name = GameName.ToString(), TimeEnd = ExpirationDate.ToString(), Website = "Prime Gaming" };
+                if (!gameCounter.Contains(GameName.ToString()))
+                {
+                    GTBR.Add(newItem);
+                    gameCounter.Add(GameName.ToString());
+                }
                 GameName.Clear();
                 ExpirationDate.Clear();
             }
 
+            GTBR = GTBR.OrderBy(x => x.Name).ToList();
             return GTBR;
         }
     }

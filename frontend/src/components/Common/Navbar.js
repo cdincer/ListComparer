@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import { NavLink } from "react-router-dom";
 
-
+//https://stackoverflow.com/questions/72091197/what-is-the-difference-between-nav-link-vs-link-vs-navlink-in-react-router-dom-a
 const Navbar = () => {
   return (
     <Navbar2 className="navbar navbar-inverse" expand="lg">
